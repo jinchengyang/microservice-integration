@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
+ * 对外暴露的接口可以直接访问，依赖permitAll的配置
+ * 通过配置来设置白名单，对部分url不进行权限校验
  * @author keets
  * @date 2017/9/25
  */

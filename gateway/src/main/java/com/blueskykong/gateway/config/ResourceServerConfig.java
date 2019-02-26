@@ -24,7 +24,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private PermitAllUrlProperties permitAllUrlProperties;
 
-
+    /**
+     * 配置permitAll的请求pattern，依赖于permitAllUrlProperties对象
+     * @param http
+     * @throws Exception
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -35,6 +39,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .anyRequest().authenticated();
     }
 
+    /**
+     * 通过自定义的CustomRemoteTokenServices，植入身份合法性的相关验证
+     * @param resources
+     * @throws Exception
+     */
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         CustomRemoteTokenServices resourceServerTokenServices = new CustomRemoteTokenServices();

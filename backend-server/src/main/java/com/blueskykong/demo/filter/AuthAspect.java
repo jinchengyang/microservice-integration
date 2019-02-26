@@ -36,6 +36,7 @@ public class AuthAspect {
     @Around("cut()&&@annotation(preAuth)")
     public Object record(ProceedingJoinPoint joinPoint, PreAuth preAuth) throws Throwable {
 
+        //取出注解中的表达式
         String value = preAuth.value();
 
         SecurityContextHolder.getContext();
@@ -44,8 +45,11 @@ public class AuthAspect {
         StandardEvaluationContext operationContext = new StandardEvaluationContext(operations);
         ExpressionParser parser = new SpelExpressionParser();
         Expression expression = parser.parseExpression(value);
+
+        //获取表达式判断的结果
         boolean result = expression.getValue(operationContext, boolean.class);
         if (result) {
+            //继续执行接口内的方法
             return joinPoint.proceed();
         }
 
